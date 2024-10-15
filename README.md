@@ -11,17 +11,8 @@
 - Интеграция с CI/CD
 
 ## Установка
-1. Склонируйте репозиторий:
-    ```bash
-    git clone https://github.com/<твой-username>/lru-cache-project.git
-    ```
-2. Инициализируйте зависимости:
-    ```bash
-    go mod tidy
-    ```
+
 
 ## Использование
 Пример использования кэша можно будет найти в `/cmd/lru-cache/main.go`.
 
-## Лицензия
-[MIT](LICENSE)
