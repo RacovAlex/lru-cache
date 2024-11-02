@@ -11,7 +11,7 @@ type LRUCache[K comparable, V any] struct {
 	capacity int
 	cache    map[K]*list.Element
 	list     *list.List
-	mu       sync.Mutex
+	mu       sync.RWMutex // В связи частым чтением, лучше подходит для кэша
 }
 
 // entry - ключ-значение для хранения в списке, требуется для удобного удаления элементов из cache.
@@ -30,8 +30,8 @@ func NewLRUCache[K comparable, V any](capacity int) *LRUCache[K, V] {
 
 // Get возвращает значение по ключу и флаг его наличия и перемещает элемент в начало (если он в кэше).
 func (c *LRUCache[K, V]) Get(key K) (V, bool) {
-	c.mu.Lock()
-	defer c.mu.Unlock()
+	c.mu.RLock()
+	defer c.mu.RUnlock()
 	if element, ok := c.cache[key]; ok {
 		c.list.MoveToFront(element)
 		// Поскольку Value является типом interface{}, нам нужно выполнить приведение типа
